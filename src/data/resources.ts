@@ -1,0 +1,110 @@
+import { Resource } from '@/lib/types';
+
+export const resources: Resource[] = [
+  {
+    id: 'res-1',
+    title: 'Prompt Engineering Guide & Best Practices',
+    description: 'Comprehensive guide to zero-shot, few-shot prompting, chain-of-thought, and directional stimulus prompt techniques.',
+    category: 'Prompt Engineering',
+    url: '#',
+  },
+  {
+    id: 'res-2',
+    title: 'System Prompt Architecture for Production',
+    description: 'Patterns for crafting robust role definitions, guardrails, and structured output formatting for enterprise LLMs.',
+    category: 'Prompt Engineering',
+    url: '#',
+  },
+  {
+    id: 'res-3',
+    title: 'Autonomous AI Agents with LangGraph & CrewAI',
+    description: 'Architecture breakdown of planning loops, tool calling, memory management, and multi-agent coordination.',
+    category: 'AI Agents',
+    url: '#',
+  },
+  {
+    id: 'res-4',
+    title: 'Evaluating Multi-Agent Systems in Practice',
+    description: 'Frameworks and metrics to benchmark latency, token cost, task success rate, and reliability across agent workflows.',
+    category: 'AI Agents',
+    url: '#',
+  },
+  {
+    id: 'res-5',
+    title: 'Building Enterprise RAG Architectures',
+    description: 'End-to-end guide to hybrid dense-sparse search, contextual reranking, chunking strategies, and vector indexing.',
+    category: 'Tools & Frameworks',
+    url: '#',
+  },
+  {
+    id: 'res-6',
+    title: 'Fine-tuning LLMs with LoRA and QLoRA',
+    description: 'Parameter-efficient fine-tuning workflows on custom domain datasets with minimal GPU memory overhead.',
+    category: 'Machine Learning',
+    url: '#',
+  },
+  {
+    id: 'res-7',
+    title: 'Vector Database Comparison: pgvector, Pinecone & Qdrant',
+    description: 'Detailed performance, cost, filtering capability, and hosting trade-offs for production embedding retrieval.',
+    category: 'Tools & Frameworks',
+    url: '#',
+  },
+  {
+    id: 'res-8',
+    title: 'Reinforcement Learning from Human Feedback (RLHF)',
+    description: 'Deep dive into reward modeling, PPO optimization, and direct preference optimization (DPO) alternatives.',
+    category: 'Machine Learning',
+    url: '#',
+  },
+  {
+    id: 'res-9',
+    title: 'Prompt Injection Defense & Red Teaming',
+    description: 'Techniques to secure LLM pipelines against indirect jailbreaks, data exfiltration, and prompt leakage.',
+    category: 'Prompt Engineering',
+    url: '#',
+  },
+  {
+    id: 'res-10',
+    title: 'Local Model Deployment with Ollama and vLLM',
+    description: 'Optimizing high-throughput local inference with continuous batching and quantization (AWQ/GGUF).',
+    category: 'Tools & Frameworks',
+    url: '#',
+  },
+  {
+    id: 'res-11',
+    title: 'Self-Reflective Agent Design Patterns',
+    description: 'Implementing Reflexion loops, self-correction, and critique mechanisms to boost reasoning accuracy.',
+    category: 'AI Agents',
+    url: '#',
+  },
+  {
+    id: 'res-12',
+    title: 'Quantization Essentials: 4-bit, 8-bit & GGUF',
+    description: 'How weight and activation quantization works under the hood and its impact on perplexity.',
+    category: 'Machine Learning',
+    url: '#',
+  },
+  {
+    id: 'res-13',
+    title: 'LlamaIndex: Advanced Document Indexing',
+    description: 'Hierarchical node parsing, sentence window retrieval, and metadata filtering for structured search.',
+    category: 'Tools & Frameworks',
+    url: '#',
+  },
+  {
+    id: 'res-14',
+    title: 'Synthetic Data Generation for Model Training',
+    description: 'Creating high-fidelity instruction and evaluation datasets using frontier LLMs while preventing model collapse.',
+    category: 'Machine Learning',
+    url: '#',
+  },
+];
+
+export const resourceCategories: string[] = [
+  'All',
+  'Prompt Engineering',
+  'AI Agents',
+  'Machine Learning',
+  'Tools & Frameworks',
+];
