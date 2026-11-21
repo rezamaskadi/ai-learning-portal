@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 import { Background } from './Background';
 import { ParticleLayer } from './ParticleLayer';
 import { NavTabs } from './NavTabs';
-import { SearchBar } from './SearchBar';
 
 interface PageShellProps {
   children: React.ReactNode;
@@ -40,11 +39,6 @@ export const PageShell: React.FC<PageShellProps> = ({ children }) => {
 
           {/* Navigation Tabs (Preserves ?q= across tabs) */}
           <NavTabs />
-
-          {/* Global Search Bar available across all sub-pages */}
-          <div className="w-full max-w-md">
-            <SearchBar />
-          </div>
         </header>
       )}
 
