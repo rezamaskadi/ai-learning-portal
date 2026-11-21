@@ -1,17 +1,25 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-export const ChatInput: React.FC = () => {
-  const [query, setQuery] = useState('');
+function ChatInputContent() {
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const initialQuery = searchParams.get('q') || '';
+
+  const [query, setQuery] = useState(initialQuery);
+
+  useEffect(() => {
+    setQuery(initialQuery);
+  }, [initialQuery]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      // Navigate to resources with search query
       router.push(`/resources?q=${encodeURIComponent(query.trim())}`);
+    } else {
+      router.push('/resources');
     }
   };
 
@@ -83,5 +91,13 @@ export const ChatInput: React.FC = () => {
         </div>
       </form>
     </div>
+  );
+}
+
+export const ChatInput: React.FC = () => {
+  return (
+    <Suspense fallback={<div className="w-full max-w-2xl px-4 h-14" />}>
+      <ChatInputContent />
+    </Suspense>
   );
 };

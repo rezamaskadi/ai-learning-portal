@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Background } from './Background';
 import { ParticleLayer } from './ParticleLayer';
 import { NavTabs } from './NavTabs';
+import { SearchBar } from './SearchBar';
 
 interface PageShellProps {
   children: React.ReactNode;
@@ -22,10 +23,12 @@ export const PageShell: React.FC<PageShellProps> = ({ children }) => {
 
       {/* Header for sub-pages */}
       {!isHome && (
-        <header className="relative z-20 w-full pt-8 pb-4 px-4 flex flex-col items-center border-b border-portal-border/40 backdrop-blur-sm bg-portal-darker/50">
+        <header className="relative z-20 w-full pt-7 pb-4 px-4 flex flex-col items-center border-b border-portal-border/40 backdrop-blur-sm bg-portal-darker/60 gap-4">
+          {/* Logo returning to home */}
           <Link
             href="/"
-            className="group flex flex-col items-center mb-6 text-center hover:opacity-90 transition-opacity"
+            className="group flex flex-col items-center text-center hover:opacity-90 transition-opacity"
+            title="Kembali ke Beranda"
           >
             <span className="text-[10px] tracking-[0.25em] uppercase text-portal-accent font-medium mb-1">
               AI Learning Portal
@@ -34,7 +37,14 @@ export const PageShell: React.FC<PageShellProps> = ({ children }) => {
               AI <span className="italic font-normal text-portal-accent">Creator</span> Labs
             </span>
           </Link>
+
+          {/* Navigation Tabs (Preserves ?q= across tabs) */}
           <NavTabs />
+
+          {/* Global Search Bar available across all sub-pages */}
+          <div className="w-full max-w-md">
+            <SearchBar />
+          </div>
         </header>
       )}
 
