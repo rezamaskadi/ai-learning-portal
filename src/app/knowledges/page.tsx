@@ -4,7 +4,15 @@ import React, { useState, useMemo, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { videos } from '@/data/videos';
 import { VideoGrid } from '@/components/knowledges/VideoGrid';
+import { SortDropdown, SortOption } from '@/components/knowledges/SortDropdown';
 import { Video } from '@/lib/types';
+
+const sortOptions: SortOption[] = [
+  { value: 'newest', label: 'Terbaru' },
+  { value: 'duration-desc', label: 'Durasi Terpanjang' },
+  { value: 'duration-asc', label: 'Durasi Terpendek' },
+  { value: 'title-asc', label: 'Judul (A — Z)' },
+];
 
 const videoTopics = [
   { label: 'Semua', query: '' },
@@ -21,7 +29,7 @@ function KnowledgesContent() {
   const queryParam = searchParams.get('q') || '';
 
   const [inputVal, setInputVal] = useState(queryParam);
-  const [sortBy, setSortBy] = useState<'newest' | 'duration'>('newest');
+  const [sortBy, setSortBy] = useState<string>('newest');
 
   // Sync input value if URL changes (e.g. back/forward, tab switch)
   React.useEffect(() => {
@@ -46,8 +54,14 @@ function KnowledgesContent() {
     }
 
     // Sort order
-    if (sortBy === 'duration') {
+    if (sortBy === 'duration-desc') {
       return [...list].sort((a, b) => b.duration.localeCompare(a.duration));
+    }
+    if (sortBy === 'duration-asc') {
+      return [...list].sort((a, b) => a.duration.localeCompare(b.duration));
+    }
+    if (sortBy === 'title-asc') {
+      return [...list].sort((a, b) => a.title.localeCompare(b.title));
     }
     return list;
   }, [queryParam, sortBy]);
@@ -87,18 +101,13 @@ function KnowledgesContent() {
           </p>
         </div>
 
-        {/* Sort Control */}
-        <div className="flex items-center gap-2 self-start sm:self-auto">
-          <span className="text-xs text-portal-muted">Urutkan:</span>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as 'newest' | 'duration')}
-            className="text-xs font-medium text-slate-200 bg-portal-card border border-portal-border px-3 py-1.5 rounded-lg focus:outline-none focus:border-purple-400 cursor-pointer"
-          >
-            <option value="newest">Terbaru</option>
-            <option value="duration">Durasi Terpanjang</option>
-          </select>
-        </div>
+        {/* Custom Theme-matched Sort Dropdown */}
+        <SortDropdown
+          value={sortBy}
+          onChange={(val) => setSortBy(val)}
+          options={sortOptions}
+          label="Urutkan:"
+        />
       </div>
 
       {/* In-page Filter & Search Bar */}
