@@ -8,6 +8,7 @@ export const videos: Video[] = [
     duration: '18:45',
     description: 'Step-by-step masterclass on wiring agent state machines, tool hooks, and human-in-the-loop approvals.',
     source: 'AI Creator Labs',
+    youtubeUrl: 'https://www.youtube.com/@aicreatorlabsid',
   },
   {
     id: 'vid-2',
@@ -16,6 +17,7 @@ export const videos: Video[] = [
     duration: '24:12',
     description: 'Learn why naive cosine similarity fails and how late-interaction models transform retrieval accuracy.',
     source: 'AI Creator Labs',
+    youtubeUrl: 'https://www.youtube.com/@aicreatorlabsid',
   },
   {
     id: 'vid-3',
@@ -24,6 +26,7 @@ export const videos: Video[] = [
     duration: '14:20',
     description: 'Structured thinking, few-shot exemplars, XML tags structuring, and avoiding hallucination traps.',
     source: 'AI Creator Labs',
+    youtubeUrl: 'https://www.youtube.com/@aicreatorlabsid',
   },
   {
     id: 'vid-4',
@@ -32,6 +35,7 @@ export const videos: Video[] = [
     duration: '31:05',
     description: 'Hands-on tutorial showing memory optimization, LoRA hyperparameter tuning, and model export.',
     source: 'AI Creator Labs',
+    youtubeUrl: 'https://www.youtube.com/@aicreatorlabsid',
   },
   {
     id: 'vid-5',
@@ -40,6 +44,7 @@ export const videos: Video[] = [
     duration: '16:50',
     description: 'How senior developers orchestrate AI coding tools, prompt context rules, and automated testing.',
     source: 'AI Creator Labs',
+    youtubeUrl: 'https://www.youtube.com/@aicreatorlabsid',
   },
   {
     id: 'vid-6',
@@ -48,6 +53,7 @@ export const videos: Video[] = [
     duration: '11:35',
     description: 'Guaranteed JSON responses and robust schema validation across OpenAI and Anthropic APIs.',
     source: 'AI Creator Labs',
+    youtubeUrl: 'https://www.youtube.com/@aicreatorlabsid',
   },
   {
     id: 'vid-7',
@@ -56,6 +62,7 @@ export const videos: Video[] = [
     duration: '28:40',
     description: 'Serving large language models at scale with autoscaling GPU clusters and low-latency paged attention.',
     source: 'AI Creator Labs',
+    youtubeUrl: 'https://www.youtube.com/@aicreatorlabsid',
   },
   {
     id: 'vid-8',
@@ -64,6 +71,7 @@ export const videos: Video[] = [
     duration: '22:15',
     description: 'Comprehensive benchmarks comparing query throughput, filtered HNSW index speeds, and cloud costs.',
     source: 'AI Creator Labs',
+    youtubeUrl: 'https://www.youtube.com/@aicreatorlabsid',
   },
   {
     id: 'vid-9',
@@ -72,6 +80,7 @@ export const videos: Video[] = [
     duration: '19:30',
     description: 'Setting up automated CI/CD eval pipelines for faithfullness, answer relevancy, and context recall.',
     source: 'AI Creator Labs',
+    youtubeUrl: 'https://www.youtube.com/@aicreatorlabsid',
   },
   {
     id: 'vid-10',
@@ -80,5 +89,6 @@ export const videos: Video[] = [
     duration: '20:10',
     description: 'Building ultra low-latency conversational audio agents with WebSockets and sub-500ms response times.',
     source: 'AI Creator Labs',
+    youtubeUrl: 'https://www.youtube.com/@aicreatorlabsid',
   },
 ];

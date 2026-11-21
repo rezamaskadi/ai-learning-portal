@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { Article } from '@/lib/types';
 
 interface ArticleCardProps {
@@ -7,9 +8,9 @@ interface ArticleCardProps {
 
 export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   return (
-    <a
+    <Link
       href={article.url}
-      className="group block rounded-xl bg-portal-card border border-portal-border p-6 hover:border-portal-accent/60 hover:-translate-y-0.5 transition-all duration-200 backdrop-blur-sm hover:shadow-[0_8px_30px_rgb(124,58,237,0.1)]"
+      className="group block rounded-xl bg-portal-card border border-portal-border p-6 hover:border-portal-accent/60 hover:-translate-y-0.5 transition-all duration-200 backdrop-blur-sm hover:shadow-[0_8px_30px_rgb(124,58,237,0.1)] cursor-pointer"
     >
       <div className="flex flex-col gap-3">
         {/* Title */}
@@ -42,6 +43,6 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };

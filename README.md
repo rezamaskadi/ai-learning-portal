@@ -21,9 +21,9 @@ A premium, dark-themed learning portal for artificial intelligence practitioners
   - Compact sticky top header on all sub-pages with one-click return to the home page (`/`).
 
 - **Interactive Content Sections:**
-  - **Resources (`/resources`):** Responsive card grid (14 curated items) featuring category pills, topic tags, descriptions, and reactive category filtering.
-  - **Knowledges (`/knowledges`):** Video masterclass library (10 sessions) with 16:9 gradient thumbnails, duration badges, and playback indicators.
-  - **Articles (`/articles`):** Technical publications (12 articles) with real-time tag filtering, article count badges, reading times, and dates. Features a desktop vertical sticky sidebar and mobile horizontal scroll bar.
+  - **Resources (`/resources` & `/resources/[slug]`):** Responsive card grid (14 curated items) featuring category pills, topic tags, descriptions, reactive category & search filtering, and dedicated dynamic detail pages with breadcrumbs.
+  - **Knowledges (`/knowledges`):** Video masterclass library (10 sessions) with 16:9 gradient thumbnails, duration badges, and direct external links to the official YouTube channel (`https://www.youtube.com/@aicreatorlabsid`).
+  - **Articles (`/articles` & `/articles/[slug]`):** Technical publications (12 articles) with real-time tag & search query filtering, article count badges, reading times, dates, and dedicated dynamic detail pages. Features a desktop vertical sticky sidebar and mobile horizontal scroll bar.
 
 - **Home Page Prompt Bar & Shortcut Pills:**
   - Frosted glass capsule pills for quick exploration of popular topics (*Prompt Engineering, AI Agents, LLM Fine-tuning, RAG Systems, etc.*).
@@ -58,11 +58,15 @@ monetin/
 │   │   ├── page.tsx            # Home page (Hero, NavTabs, ShortcutPills, ChatInput)
 │   │   ├── not-found.tsx       # Dedicated branded 404 page
 │   │   ├── resources/
-│   │   │   └── page.tsx        # Resources page with category filter & grid
+│   │   │   ├── page.tsx        # Resources page with category & search filter
+│   │   │   └── [slug]/
+│   │   │       └── page.tsx    # Dynamic resource detail page (14 static slugs)
 │   │   ├── knowledges/
-│   │   │   └── page.tsx        # Video masterclass library page
+│   │   │   └── page.tsx        # Video masterclass library with YouTube integration
 │   │   └── articles/
-│   │       └── page.tsx        # Tag-filtered articles page
+│   │       ├── page.tsx        # Tag & query filtered articles page
+│   │       └── [slug]/
+│   │           └── page.tsx    # Dynamic article detail page (12 static slugs)
 │   ├── components/
 │   │   ├── layout/
 │   │   │   ├── Background.tsx  # Multi-layer blurred CSS gradients
