@@ -1,69 +1,49 @@
 'use client';
 
-import React, { useState, useMemo, Suspense } from 'react';
+import React, { useState, useMemo, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { videos } from '@/data/videos';
+import { v2Videos } from '@/data/v2/videos';
 import { VideoGrid } from '@/components/knowledges/VideoGrid';
 import { SortDropdown, SortOption } from '@/components/knowledges/SortDropdown';
+import { matchesSearchQuery, sortVideos, VideoSortOption } from '@/lib/search';
 import { Video } from '@/lib/types';
 
 const sortOptions: SortOption[] = [
-  { value: 'newest', label: 'Terbaru' },
-  { value: 'duration-desc', label: 'Durasi Terpanjang' },
-  { value: 'duration-asc', label: 'Durasi Terpendek' },
-  { value: 'title-asc', label: 'Judul (A — Z)' },
+  { value: 'newest', label: 'Newest First' },
+  { value: 'duration-desc', label: 'Longest Duration' },
+  { value: 'duration-asc', label: 'Shortest Duration' },
+  { value: 'title-asc', label: 'Title (A — Z)' },
 ];
 
 const videoTopics = [
-  { label: 'Semua', query: '' },
-  { label: 'AI Agents', query: 'agent' },
-  { label: 'RAG & Vectors', query: 'rag' },
-  { label: 'Fine-Tuning', query: 'fine-tuning' },
-  { label: 'Prompting', query: 'prompt' },
-  { label: 'Voice AI', query: 'voice' },
+  { label: 'All', query: '' },
+  { label: 'AI Agents', query: 'LangGraph' },
+  { label: 'RAG & Vectors', query: 'RAG' },
+  { label: 'Fine-Tuning', query: 'Fine-Tuning' },
+  { label: 'Prompting', query: 'Prompt' },
+  { label: 'Voice AI', query: 'Voice' },
 ];
 
-function KnowledgesContent() {
+function V2KnowledgesContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const queryParam = searchParams.get('q') || '';
 
   const [inputVal, setInputVal] = useState(queryParam);
-  const [sortBy, setSortBy] = useState<string>('newest');
+  const [sortBy, setSortBy] = useState<VideoSortOption>('newest');
 
-  // Sync input value if URL changes (e.g. back/forward, tab switch)
-  React.useEffect(() => {
+  useEffect(() => {
     setInputVal(queryParam);
   }, [queryParam]);
 
-  // Robust multi-term and partial matching
   const filteredVideos = useMemo(() => {
-    let list = videos;
+    const filtered = queryParam.trim()
+      ? v2Videos.filter((v: Video) =>
+          matchesSearchQuery([v.title, v.description, v.source], queryParam)
+        )
+      : v2Videos;
 
-    if (queryParam.trim()) {
-      const rawQ = queryParam.trim().toLowerCase();
-      const terms = rawQ.split(/\s+/).filter((t) => t.length > 1);
-
-      list = list.filter((v: Video) => {
-        const fullText = `${v.title} ${v.description || ''} ${v.source || ''}`.toLowerCase();
-        return (
-          fullText.includes(rawQ) ||
-          (terms.length > 0 && terms.some((term) => fullText.includes(term)))
-        );
-      });
-    }
-
-    // Sort order
-    if (sortBy === 'duration-desc') {
-      return [...list].sort((a, b) => b.duration.localeCompare(a.duration));
-    }
-    if (sortBy === 'duration-asc') {
-      return [...list].sort((a, b) => a.duration.localeCompare(b.duration));
-    }
-    if (sortBy === 'title-asc') {
-      return [...list].sort((a, b) => a.title.localeCompare(b.title));
-    }
-    return list;
+    return sortVideos(filtered, sortBy);
   }, [queryParam, sortBy]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -90,34 +70,32 @@ function KnowledgesContent() {
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-10 flex flex-col gap-8">
-      {/* Title & Subtitle */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-portal-border/40 pb-6">
         <div>
           <h1 className="font-serif text-4xl sm:text-5xl font-bold tracking-tight text-white mb-2">
             Knowledges
           </h1>
           <p className="text-portal-muted text-base sm:text-lg">
-            Video masterclasses, teardowns, dan panduan arsitektur AI praktis.
+            Video masterclasses, teardowns, and practical AI architecture walkthroughs.
           </p>
         </div>
 
-        {/* Custom Theme-matched Sort Dropdown */}
         <SortDropdown
           value={sortBy}
-          onChange={(val) => setSortBy(val)}
+          onChange={(val) => setSortBy(val as VideoSortOption)}
           options={sortOptions}
-          label="Urutkan:"
+          label="Sort by:"
         />
       </div>
 
-      {/* In-page Filter & Search Bar */}
+      {/* Topic Pills & In-page Search */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-portal-card/40 border border-portal-border/60 p-4 rounded-2xl backdrop-blur-sm">
-        {/* Topic Quick Filter Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-none">
           {videoTopics.map((topic) => {
+            const normalizedQ = queryParam.trim().toLowerCase();
             const isActive =
-              (!topic.query && !queryParam) ||
-              (topic.query && queryParam.toLowerCase().includes(topic.query));
+              (!topic.query && !normalizedQ) ||
+              (Boolean(topic.query) && normalizedQ === topic.query.toLowerCase());
 
             return (
               <button
@@ -135,7 +113,6 @@ function KnowledgesContent() {
           })}
         </div>
 
-        {/* Dedicated Search Input on Knowledges Page */}
         <form onSubmit={handleSearchSubmit} className="w-full md:w-80 relative">
           <div className="relative flex items-center rounded-xl bg-[#0b0c1e] border border-white/[0.12] focus-within:border-purple-400/80 px-3 py-1.5">
             <svg
@@ -155,7 +132,7 @@ function KnowledgesContent() {
               type="text"
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
-              placeholder="Cari video tutorial..."
+              placeholder="Search video tutorials..."
               className="w-full bg-transparent text-xs text-white placeholder-slate-400 focus:outline-none"
             />
             {inputVal && (
@@ -163,7 +140,7 @@ function KnowledgesContent() {
                 type="button"
                 onClick={handleResetSearch}
                 className="text-slate-400 hover:text-white text-xs px-1"
-                title="Hapus pencarian"
+                title="Clear search"
               >
                 ✕
               </button>
@@ -172,21 +149,21 @@ function KnowledgesContent() {
         </form>
       </div>
 
-      {/* Search Status Banner if 'q' is active */}
+      {/* Search Status Banner */}
       {queryParam.trim() && (
         <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-3 bg-purple-950/30 border border-purple-500/30 rounded-2xl p-4 backdrop-blur-md">
           <div className="flex items-center gap-2.5 text-sm">
             <span className="text-purple-400">🔍</span>
             <span className="text-slate-200">
-              Menampilkan video untuk <strong className="text-white font-semibold">&ldquo;{queryParam}&rdquo;</strong>
-              <span className="text-portal-muted ml-1.5">— {filteredVideos.length} video ditemukan</span>
+              Showing videos for <strong className="text-white font-semibold">&ldquo;{queryParam}&rdquo;</strong>
+              <span className="text-portal-muted ml-1.5">— {filteredVideos.length} videos found</span>
             </span>
           </div>
           <button
             onClick={handleResetSearch}
             className="text-xs px-3.5 py-1.5 rounded-full bg-white/[0.08] hover:bg-white/[0.15] text-slate-300 hover:text-white border border-white/[0.1] transition-all"
           >
-            ✕ Reset pencarian
+            ✕ Reset search
           </button>
         </div>
       )}
@@ -200,18 +177,16 @@ function KnowledgesContent() {
             🎬
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-white mb-1">
-              Tidak ada video yang cocok
-            </h3>
+            <h3 className="text-lg font-semibold text-white mb-1">No matching videos</h3>
             <p className="text-sm text-portal-muted max-w-md">
-              Tidak ada video yang sesuai dengan kata kunci &ldquo;{queryParam}&rdquo;. Coba gunakan istilah pencarian lain seperti &ldquo;RAG&rdquo;, &ldquo;LangGraph&rdquo;, atau &ldquo;Fine-Tuning&rdquo;.
+              No videos matched &ldquo;{queryParam}&rdquo;. Try another keyword such as &ldquo;RAG&rdquo;, &ldquo;LangGraph&rdquo;, or &ldquo;Fine-Tuning&rdquo;.
             </p>
           </div>
           <button
             onClick={handleResetSearch}
             className="mt-2 px-5 py-2 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-500 hover:to-indigo-500 shadow-md transition-all"
           >
-            Tampilkan Semua Video
+            Show All Videos
           </button>
         </div>
       )}
@@ -219,14 +194,16 @@ function KnowledgesContent() {
   );
 }
 
-export default function KnowledgesPage() {
+export default function V2KnowledgesPage() {
   return (
-    <Suspense fallback={
-      <div className="w-full max-w-7xl mx-auto px-4 py-20 text-center text-portal-muted">
-        Memuat video...
-      </div>
-    }>
-      <KnowledgesContent />
+    <Suspense
+      fallback={
+        <div className="w-full max-w-7xl mx-auto px-4 py-20 text-center text-portal-muted">
+          Loading videos...
+        </div>
+      }
+    >
+      <V2KnowledgesContent />
     </Suspense>
   );
 }

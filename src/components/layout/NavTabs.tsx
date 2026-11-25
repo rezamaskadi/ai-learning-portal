@@ -10,9 +10,9 @@ function NavTabsContent() {
   const q = searchParams.get('q');
 
   const tabs = [
-    { label: 'RESOURCES', href: '/resources' },
-    { label: 'KNOWLEDGES', href: '/knowledges' },
-    { label: 'ARTICLES', href: '/articles' },
+    { label: 'RESOURCES', href: '/old/resources' },
+    { label: 'KNOWLEDGES', href: '/old/knowledges' },
+    { label: 'ARTICLES', href: '/old/articles' },
   ];
 
   return (

@@ -13,7 +13,7 @@ interface PageShellProps {
 
 export const PageShell: React.FC<PageShellProps> = ({ children }) => {
   const pathname = usePathname();
-  const isHome = pathname === '/';
+  const isHome = pathname === '/old';
 
   return (
     <div className="relative min-h-screen text-slate-100 flex flex-col justify-between selection:bg-purple-600/40 selection:text-white">
@@ -25,7 +25,7 @@ export const PageShell: React.FC<PageShellProps> = ({ children }) => {
         <header className="relative z-20 w-full pt-7 pb-4 px-4 flex flex-col items-center border-b border-portal-border/40 backdrop-blur-sm bg-portal-darker/60 gap-4">
           {/* Logo returning to home */}
           <Link
-            href="/"
+            href="/old"
             className="group flex flex-col items-center text-center hover:opacity-90 transition-opacity"
             title="Kembali ke Beranda"
           >

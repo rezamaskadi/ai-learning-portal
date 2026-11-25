@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import '@/styles/globals.css';
-import { PageShell } from '@/components/layout/PageShell';
+import { V2PageShell } from '@/components/v2/V2PageShell';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${inter.variable} ${playfair.variable} font-sans`}>
       <body className="antialiased bg-portal-darker text-slate-100 min-h-screen font-sans">
-        <PageShell>{children}</PageShell>
+        <V2PageShell>{children}</V2PageShell>
       </body>
     </html>
   );
