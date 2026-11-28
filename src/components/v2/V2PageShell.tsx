@@ -13,7 +13,7 @@ interface V2PageShellProps {
 
 export const V2PageShell: React.FC<V2PageShellProps> = ({ children }) => {
   const pathname = usePathname();
-  if (pathname.startsWith('/old')) {
+  if (pathname.startsWith('/old') || pathname.startsWith('/v2')) {
     return <>{children}</>;
   }
   const isHome = pathname === '/';
@@ -33,7 +33,7 @@ export const V2PageShell: React.FC<V2PageShellProps> = ({ children }) => {
             <span className="text-[10px] tracking-[0.25em] uppercase text-portal-accent font-medium mb-1">
               AI Learning Portal
             </span>
-            <span className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-white group-hover:text-purple-200 transition-colors">
+            <span className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-white transition-colors">
               AI <span className="italic font-normal text-portal-accent">Creator</span> Labs
             </span>
           </Link>
